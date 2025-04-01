@@ -33,7 +33,7 @@ enum tap_dance {
     TD_Х_Ъ,
     TD_MS_4_5,
 };
-
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
         XXXXXXX    ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX        ,XXXXXXX       ,                 /**/             XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX           ,XXXXXXX    ,
@@ -99,23 +99,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           XXXXXXX ,XXXXXXX ,_______ ,_______ ,_______ , /**/ _______ ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX
     ),
 };
-
+// clang-format on
 bool prev_prev_pressed = false;
-bool prev_pressed = false;
-bool curr_pressed = false;
+bool prev_pressed      = false;
+bool curr_pressed      = false;
 
 uint16_t prev_prev_keycode = KC_NO;
-uint16_t prev_keycode = KC_NO;
-uint16_t curr_keycode = KC_NO;
+uint16_t prev_keycode      = KC_NO;
+uint16_t curr_keycode      = KC_NO;
 
 bool handle_mod_tap_oneshot(uint16_t mt_key, uint16_t oneshot_mods) {
     static uint16_t timer;
-    bool allow_mods = prev_keycode == curr_keycode && prev_pressed;
+    bool            allow_mods = prev_keycode == curr_keycode && prev_pressed;
     clear_oneshot_mods();
 
     if (curr_pressed) {
         timer = timer_read();
-        register_code(mt_key); 
+        register_code(mt_key);
     } else {
         unregister_code(mt_key);
 
@@ -123,17 +123,17 @@ bool handle_mod_tap_oneshot(uint16_t mt_key, uint16_t oneshot_mods) {
             add_oneshot_mods(oneshot_mods);
         }
     }
-    return false; 
+    return false;
 }
 
-bool handle_layer_tap_oneshot(enum sofle_layers layer ,uint16_t oneshot_mods) {
+bool handle_layer_tap_oneshot(enum sofle_layers layer, uint16_t oneshot_mods) {
     static uint16_t timer;
-    bool allow_mods = prev_keycode == curr_keycode && prev_pressed;
+    bool            allow_mods = prev_keycode == curr_keycode && prev_pressed;
     clear_oneshot_mods();
 
     if (curr_pressed) {
         timer = timer_read();
-        layer_on(layer); 
+        layer_on(layer);
     } else {
         layer_off(layer);
 
@@ -141,7 +141,7 @@ bool handle_layer_tap_oneshot(enum sofle_layers layer ,uint16_t oneshot_mods) {
             add_oneshot_mods(oneshot_mods);
         }
     }
-    return false; 
+    return false;
 }
 
 bool handle_layer_on_off(enum sofle_layers layer) {
@@ -158,27 +158,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     clear_oneshot_layer_state(ONESHOT_PRESSED);
 
     prev_prev_pressed = prev_pressed;
-    prev_pressed = curr_pressed;
-    curr_pressed = record->event.pressed;
+    prev_pressed      = curr_pressed;
+    curr_pressed      = record->event.pressed;
 
     prev_prev_keycode = prev_keycode;
-    prev_keycode = curr_keycode;
-    curr_keycode = keycode;
+    prev_keycode      = curr_keycode;
+    curr_keycode      = keycode;
 
     switch (keycode) {
-        case KC_QWERTY: return handle_persist_layer(_QWERTY); 
-        case KC_FS: return handle_layer_on_off(_FS);
-        case KC_LT_SYS_CSG: return handle_layer_tap_oneshot(_SYS, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LGUI) | MOD_BIT(KC_LSFT) );
-        case KC_MT_CTRL_MEH: return handle_mod_tap_oneshot(KC_LCTL, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LSFT));
-        case KC_MT_LSFT_CS: return handle_mod_tap_oneshot(KC_LSFT, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT));
+        case KC_QWERTY:
+            return handle_persist_layer(_QWERTY);
+        case KC_FS:
+            return handle_layer_on_off(_FS);
+        case KC_LT_SYS_CSG:
+            return handle_layer_tap_oneshot(_SYS, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LGUI) | MOD_BIT(KC_LSFT));
+        case KC_MT_CTRL_MEH:
+            return handle_mod_tap_oneshot(KC_LCTL, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LSFT));
+        case KC_MT_LSFT_CS:
+            return handle_mod_tap_oneshot(KC_LSFT, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT));
     }
-
 
     return true;
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_Э_Ё] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_GRV),
-    [TD_Х_Ъ] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
+    [TD_Э_Ё]    = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_GRV),
+    [TD_Х_Ъ]    = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
     [TD_MS_4_5] = ACTION_TAP_DANCE_DOUBLE(MS_BTN4, MS_BTN5),
 };
