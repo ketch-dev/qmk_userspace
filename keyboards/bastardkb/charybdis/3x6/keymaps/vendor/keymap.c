@@ -36,67 +36,58 @@ enum tap_dance {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        XXXXXXX    ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX        ,XXXXXXX       ,                 /**/             XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX           ,XXXXXXX    ,
-        TD(TD_Э_Ё) ,KC_Q    ,KC_W    ,KC_E    ,KC_R           ,KC_T          ,                 /**/             KC_Y    ,KC_U    ,KC_I    ,KC_O    ,KC_P              ,TD(TD_Х_Ъ) ,
-        KC_ESC     ,KC_A    ,KC_S    ,KC_D    ,KC_F           ,KC_G          ,                 /**/             KC_H    ,KC_J    ,KC_K    ,KC_L    ,KC_SCLN           ,KC_ENT     ,
-        KC_LGUI    ,KC_Z    ,KC_X    ,KC_C    ,KC_V           ,KC_B          ,XXXXXXX       ,  /**/ XXXXXXX    ,KC_N    ,KC_M    ,KC_COMM ,KC_DOT  ,LT(_MNG, KC_SLSH) ,KC_LALT    ,
-                             XXXXXXX ,XXXXXXX ,KC_MT_CTRL_MEH ,KC_LT_SYS_CSG ,KC_MT_LSFT_CS ,  /**/ LT(_SYM, KC_TAB)      ,KC_SPC  ,XXXXXXX ,XXXXXXX ,XXXXXXX
+        TD(TD_Э_Ё) ,KC_Q    ,KC_W    ,KC_E     ,KC_R           ,KC_T          ,                /**/                   KC_Y   ,KC_U ,KC_I    ,KC_O   ,KC_P              ,TD(TD_Х_Ъ) ,
+        KC_ESC     ,KC_A    ,KC_S    ,KC_D     ,KC_F           ,KC_G          ,                /**/                   KC_H   ,KC_J ,KC_K    ,KC_L   ,KC_SCLN           ,KC_ENT     ,
+        KC_LGUI    ,KC_Z    ,KC_X    ,KC_C     ,KC_V           ,KC_B          ,                /**/                   KC_N   ,KC_M ,KC_COMM ,KC_DOT ,LT(_MNG, KC_SLSH) ,KC_LALT    ,
+                                                KC_MT_CTRL_MEH ,KC_LT_SYS_CSG ,KC_MT_LSFT_CS , /**/ LT(_SYM, KC_TAB) ,KC_SPC
     ),
     [_DHM] = LAYOUT(
-        XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,          /**/          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
         _______ ,KC_Q    ,KC_W    ,KC_F    ,KC_P    ,KC_B    ,          /**/          KC_J    ,KC_L    ,KC_U    ,KC_Y    ,KC_SCLN ,_______ ,
         _______ ,KC_A    ,KC_R    ,KC_S    ,KC_T    ,KC_G    ,          /**/          KC_M    ,KC_N    ,KC_E    ,KC_I    ,KC_O    ,_______ ,
-        _______ ,KC_Z    ,KC_X    ,KC_C    ,KC_D    ,KC_V    ,XXXXXXX , /**/ XXXXXXX ,KC_K    ,KC_H    ,_______ ,_______ ,_______ ,_______ ,
-                          XXXXXXX ,XXXXXXX ,_______ ,_______ ,_______ , /**/ _______ ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX
+        _______ ,KC_Z    ,KC_X    ,KC_C    ,KC_D    ,KC_V    ,          /**/          KC_K    ,KC_H    ,_______ ,_______ ,_______ ,_______ ,
+                                            _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
     [_MAP_GMS] = LAYOUT(
-        XXXXXXX   ,XXXXXXX ,XXXXXXX   ,XXXXXXX   ,XXXXXXX   ,XXXXXXX   ,                       /**/          XXXXXXX ,XXXXXXX   ,XXXXXXX   ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
-        KC_F/*T*/ ,KC_TAB  ,KC_Q/*Q*/ ,KC_W/*W*/ ,KC_K/*E*/ ,KC_S/*R*/ ,                       /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-        KC_G/*G*/ ,KC_LSFT ,KC_A/*A*/ ,KC_D/*S*/ ,KC_V/*D*/ ,KC_E/*F*/ ,                       /**/          _______ ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
-        KC_T/*B*/ ,KC_LCTL ,KC_Z/*Z*/ ,KC_X/*X*/ ,KC_C/*C*/ ,KC_B/*V*/ ,XXXXXXX              , /**/ XXXXXXX ,_______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-                            XXXXXXX   ,XXXXXXX   ,KC_LALT   ,KC_SPC    ,LT(_GMS_NUMS, KC_ESC), /**/ _______ ,_______ ,XXXXXXX   ,XXXXXXX   ,XXXXXXX
+        KC_F/*T*/ ,KC_TAB  ,KC_Q/*Q*/ ,KC_W/*W*/ ,KC_K/*E*/ ,KC_S/*R*/ ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
+        KC_G/*G*/ ,KC_LSFT ,KC_A/*A*/ ,KC_D/*S*/ ,KC_V/*D*/ ,KC_E/*F*/ ,                        /**/          _______ ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
+        KC_T/*B*/ ,KC_LCTL ,KC_Z/*Z*/ ,KC_X/*X*/ ,KC_C/*C*/ ,KC_B/*V*/ ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
+                                                  KC_LALT   ,KC_SPC    ,LT(_GMS_NUMS, KC_ESC) , /**/ _______ ,_______
     ),
     [_QWERTY_GMS] = LAYOUT(
-        XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX  ,XXXXXXX ,                        /**/          XXXXXXX ,XXXXXXX   ,XXXXXXX   ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
         KC_T    ,KC_TAB  ,KC_Q    ,KC_W    ,KC_E     ,KC_R    ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
         KC_G    ,KC_LSFT ,KC_A    ,KC_S    ,KC_D     ,KC_F    ,                        /**/          _______ ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
-        KC_B    ,KC_LCTL ,KC_Z    ,KC_X    ,KC_C     ,KC_V    ,XXXXXXX               , /**/ XXXXXXX ,_______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-                          XXXXXXX ,XXXXXXX ,KC_LALT  ,KC_SPC  ,LT(_GMS_NUMS, KC_ESC) , /**/ _______ ,_______ ,XXXXXXX   ,XXXXXXX   ,XXXXXXX
+        KC_B    ,KC_LCTL ,KC_Z    ,KC_X    ,KC_C     ,KC_V    ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
+                                            KC_LALT  ,KC_SPC  ,LT(_GMS_NUMS, KC_ESC) , /**/ _______ ,_______
     ),
     [_GMS_NUMS] = LAYOUT(
-        XXXXXXX ,XXXXXXX       ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,          /**/          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
         KC_Y    ,HYPR(KC_QUOT) ,KC_1    ,_______ ,KC_2    ,KC_6    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
         KC_H    ,_______       ,_______ ,_______ ,_______ ,KC_7    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
-        KC_N    ,_______       ,KC_3    ,KC_4    ,KC_5    ,KC_8    ,XXXXXXX , /**/ XXXXXXX ,_______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
-                                XXXXXXX ,XXXXXXX ,_______ ,_______ ,_______ , /**/ _______ ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX
+        KC_N    ,_______       ,KC_3    ,KC_4    ,KC_5    ,KC_8    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
+                                                  _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
     [_SYS] = LAYOUT(
-        XXXXXXX    ,XXXXXXX    ,XXXXXXX    ,XXXXXXX    ,XXXXXXX    ,XXXXXXX       ,          /**/          XXXXXXX ,XXXXXXX    ,XXXXXXX ,XXXXXXX     ,XXXXXXX ,XXXXXXX   ,
         _______    ,G(C(KC_1)) ,G(C(KC_2)) ,G(C(KC_3)) ,G(C(KC_4)) ,G(C(KC_5))    ,          /**/          KC_PGUP ,KC_HOME    ,KC_UP   ,KC_END      ,_______ ,_______   ,
         C(KC_BSPC) ,KC_BSPC    ,MS_BTN2    ,MS_BTN3    ,MS_BTN1    ,TD(TD_MS_4_5) ,          /**/          KC_PGDN ,KC_LEFT    ,KC_DOWN ,KC_RIGHT    ,KC_DEL  ,C(KC_DEL) ,
-        _______    ,G(KC_1)    ,G(KC_2)    ,G(KC_3)    ,G(KC_4)    ,G(KC_5)       ,XXXXXXX , /**/ XXXXXXX ,_______ ,C(KC_LEFT) ,_______ ,C(KC_RIGHT) ,_______ ,_______   ,
-                                XXXXXXX    ,XXXXXXX    ,_______    ,_______       ,_______ , /**/ _______ ,KC_FS   ,XXXXXXX    ,XXXXXXX ,XXXXXXX
+        _______    ,G(KC_1)    ,G(KC_2)    ,G(KC_3)    ,G(KC_4)    ,G(KC_5)       ,          /**/          _______ ,C(KC_LEFT) ,_______ ,C(KC_RIGHT) ,_______ ,_______   ,
+                                                        _______    ,_______       ,_______ , /**/ _______ ,KC_FS
     ),
     [_MNG] = LAYOUT(
-        XXXXXXX ,XXXXXXX       ,XXXXXXX ,XXXXXXX      ,XXXXXXX ,XXXXXXX ,          /**/          XXXXXXX           ,XXXXXXX        ,XXXXXXX   ,XXXXXXX    ,XXXXXXX ,XXXXXXX ,
         _______ ,HYPR(KC_QUOT) ,KC_CAPS ,KC_PSCR      ,KC_INS  ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
         _______ ,_______       ,KC_VOLD ,KC_MPLY      ,KC_VOLU ,_______ ,          /**/          DF(KC_QWERTY_GMS) ,DF(KC_MAP_GMS) ,KC_QWERTY ,DF(KC_DHM) ,_______ ,_______ ,
-        _______ ,_______       ,KC_MPRV ,HYPR(KC_GRV) ,KC_MNXT ,_______ ,XXXXXXX , /**/ XXXXXXX ,_______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
-                                XXXXXXX ,XXXXXXX      ,_______ ,_______ ,_______ , /**/ _______ ,_______           ,XXXXXXX        ,XXXXXXX   ,XXXXXXX
+        _______ ,_______       ,KC_MPRV ,HYPR(KC_GRV) ,KC_MNXT ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
+                                                       _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
     [_SYM] = LAYOUT(
-        XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,          /**/          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX    ,XXXXXXX ,
         KC_GRV  ,KC_EXLM ,KC_AT   ,KC_HASH ,KC_DLR  ,KC_PERC ,          /**/          KC_CIRC ,KC_AMPR ,KC_ASTR ,KC_UNDS ,LSFT(KC_P) ,_______ ,
         KC_QUOT ,KC_1    ,KC_2    ,KC_3    ,KC_4    ,KC_5    ,          /**/          KC_6    ,KC_7    ,KC_8    ,KC_9    ,KC_0       ,KC_DQT  ,
-        KC_TILD ,KC_QUES ,KC_LBRC ,KC_LCBR ,KC_LPRN ,KC_LABK ,XXXXXXX , /**/ XXXXXXX ,KC_RABK ,KC_RPRN ,KC_RCBR ,KC_RBRC ,KC_BSLS    ,KC_PIPE ,
-                          XXXXXXX ,XXXXXXX ,KC_MINS ,KC_EQL  ,KC_PLUS , /**/ _______ ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX
+        KC_TILD ,KC_QUES ,KC_LBRC ,KC_LCBR ,KC_LPRN ,KC_LABK ,          /**/          KC_RABK ,KC_RPRN ,KC_RCBR ,KC_RBRC ,KC_BSLS    ,KC_PIPE ,
+                                            KC_MINS ,KC_EQL  ,KC_PLUS , /**/ _______ ,_______
     ),
     [_FS] = LAYOUT(
-        XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,          /**/          XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
         _______ ,KC_F1   ,KC_F2   ,KC_F3   ,KC_F4   ,KC_F5   ,          /**/          KC_F6   ,KC_F7   ,KC_F8   ,KC_F9   ,KC_F10  ,_______ ,
         _______ ,KC_LGUI ,KC_LALT ,KC_LSFT ,KC_LCTL ,_______ ,          /**/          _______ ,KC_LCTL ,KC_LSFT ,KC_LALT ,KC_LGUI ,_______ ,
-        _______ ,KC_F11  ,KC_F12  ,_______ ,_______ ,_______ ,XXXXXXX , /**/ XXXXXXX ,_______ ,KC_DEL  ,_______ ,_______ ,_______ ,_______ ,
-                          XXXXXXX ,XXXXXXX ,_______ ,_______ ,_______ , /**/ _______ ,_______ ,XXXXXXX ,XXXXXXX ,XXXXXXX
+        _______ ,KC_F11  ,KC_F12  ,_______ ,_______ ,_______ ,          /**/          _______ ,KC_DEL  ,_______ ,_______ ,_______ ,_______ ,
+                                            _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
 };
 // clang-format on
