@@ -1,9 +1,19 @@
 #include QMK_KEYBOARD_H
-#define CHARYBDIS_AUTO_SNIPING_ON_LAYER _SYS
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
+
+#ifdef MACCEL_ENABLE
+    #include "maccel/maccel.h"
+#endif
+
+report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+    // ...
+#ifdef MACCEL_ENABLE
+    return pointing_device_task_maccel(mouse_report);
+#endif
+}
 
 enum sofle_layers {
     _QWERTY,
@@ -24,6 +34,7 @@ enum custom_keycodes {
     KC_QWERTY_GMS,
     KC_FS,
     KC_LT_SYS_CSG,
+    KC_MT_LGUI_HYPR,
     KC_MT_CTRL_MEH,
     KC_MT_LSFT_CS,
 };
@@ -36,10 +47,10 @@ enum tap_dance {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
-        TD(TD_3_E) ,KC_Q    ,KC_W    ,KC_E     ,KC_R           ,KC_T          ,                /**/                   KC_Y   ,KC_U ,KC_I    ,KC_O   ,KC_P              ,TD(TD_X_b) ,
-        KC_ESC     ,KC_A    ,KC_S    ,KC_D     ,KC_F           ,KC_G          ,                /**/                   KC_H   ,KC_J ,KC_K    ,KC_L   ,KC_SCLN           ,KC_ENT     ,
-        KC_LGUI    ,KC_Z    ,KC_X    ,KC_C     ,KC_V           ,KC_B          ,                /**/                   KC_N   ,KC_M ,KC_COMM ,KC_DOT ,LT(_MNG, KC_SLSH) ,KC_LALT    ,
-                                                KC_MT_CTRL_MEH ,KC_LT_SYS_CSG ,KC_MT_LSFT_CS , /**/ LT(_SYM, KC_TAB) ,KC_SPC
+        TD(TD_3_E)      ,KC_Q    ,KC_W    ,KC_E     ,KC_R           ,KC_T          ,                /**/                   KC_Y   ,KC_U ,KC_I    ,KC_O   ,KC_P              ,TD(TD_X_b) ,
+        KC_ESC          ,KC_A    ,KC_S    ,KC_D     ,KC_F           ,KC_G          ,                /**/                   KC_H   ,KC_J ,KC_K    ,KC_L   ,KC_SCLN           ,KC_ENT     ,
+        KC_MT_LGUI_HYPR ,KC_Z    ,KC_X    ,KC_C     ,KC_V           ,KC_B          ,                /**/                   KC_N   ,KC_M ,KC_COMM ,KC_DOT ,LT(_MNG, KC_SLSH) ,KC_LALT    ,
+                                                     KC_MT_CTRL_MEH ,KC_LT_SYS_CSG ,KC_MT_LSFT_CS , /**/ LT(_SYM, KC_TAB) ,KC_SPC
     ),
     [_DHM] = LAYOUT(
         _______ ,KC_Q    ,KC_W    ,KC_F    ,KC_P    ,KC_B    ,          /**/          KC_J    ,KC_L    ,KC_U    ,KC_Y    ,KC_SCLN ,_______ ,
@@ -72,9 +83,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                         _______    ,_______       ,_______ , /**/ _______ ,KC_FS
     ),
     [_MNG] = LAYOUT(
-        _______ ,HYPR(KC_QUOT) ,KC_CAPS ,KC_PSCR      ,KC_INS  ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
-        _______ ,_______       ,KC_VOLD ,KC_MPLY      ,KC_VOLU ,_______ ,          /**/          DF(KC_QWERTY_GMS) ,DF(KC_MAP_GMS) ,KC_QWERTY ,DF(KC_DHM) ,_______ ,_______ ,
-        _______ ,_______       ,KC_MPRV ,HYPR(KC_GRV) ,KC_MNXT ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
+        _______ ,HYPR(KC_QUOT) ,UG_VALD ,UG_TOGG      ,UG_VALU  ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
+        _______ ,KC_PSCR       ,KC_VOLD ,KC_MPLY      ,KC_VOLU ,_______ ,          /**/          DF(KC_QWERTY_GMS) ,DF(KC_MAP_GMS) ,KC_QWERTY ,DF(KC_DHM) ,_______ ,_______ ,
+        _______ ,KC_CAPS       ,KC_MPRV ,HYPR(KC_GRV) ,KC_MNXT ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
                                                        _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
     [_SYM] = LAYOUT(
@@ -162,10 +173,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_FS:
             return handle_layer_on_off(_FS);
         case KC_LT_SYS_CSG:
+            charybdis_set_pointer_dragscroll_enabled(curr_pressed);
             return handle_layer_tap_oneshot(_SYS, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LGUI) | MOD_BIT(KC_LSFT));
+        case KC_MT_LGUI_HYPR:
+            return handle_mod_tap_oneshot(KC_LGUI, MOD_BIT(KC_LGUI) | MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LSFT));
         case KC_MT_CTRL_MEH:
             return handle_mod_tap_oneshot(KC_LCTL, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LSFT));
         case KC_MT_LSFT_CS:
+            charybdis_set_pointer_sniping_enabled(curr_pressed);
             return handle_mod_tap_oneshot(KC_LSFT, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LSFT));
     }
 
@@ -177,3 +192,24 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_X_b]    = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
     [TD_MS_4_5] = ACTION_TAP_DANCE_DOUBLE(MS_BTN4, MS_BTN5),
 };
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+        case _SYS:
+            rgblight_sethsv_noeeprom(HSV_GOLD);
+            break;
+        case _MNG:
+            rgblight_sethsv_noeeprom(HSV_BLUE);
+            break;
+        case _SYM:
+            rgblight_sethsv_noeeprom(HSV_GREEN);
+            break;
+        case _FS:
+            rgblight_sethsv_noeeprom(HSV_PURPLE);
+            break;
+        default:
+            rgblight_sethsv_noeeprom(15, 255, 200);
+            break;
+    }
+    return state;
+}
