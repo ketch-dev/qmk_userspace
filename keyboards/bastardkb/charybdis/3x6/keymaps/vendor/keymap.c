@@ -5,7 +5,7 @@ void rgb_matrix_update_pwm_buffers(void);
 #endif
 
 #ifdef MACCEL_ENABLE
-    #include "maccel/maccel.h"
+#    include "maccel/maccel.h"
 #endif
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
@@ -32,6 +32,7 @@ enum custom_keycodes {
     KC_DHM,
     KC_MAP_GMS,
     KC_QWERTY_GMS,
+    KC_GMS_NUMS,
     KC_FS,
     KC_LT_SYS_CSG,
     KC_MT_LGUI_HYPR,
@@ -59,31 +60,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
     [_MAP_GMS] = LAYOUT(
-        KC_F/*T*/ ,KC_TAB  ,KC_Q/*Q*/ ,KC_W/*W*/ ,KC_K/*E*/ ,KC_S/*R*/ ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-        KC_G/*G*/ ,KC_LSFT ,KC_A/*A*/ ,KC_D/*S*/ ,KC_V/*D*/ ,KC_E/*F*/ ,                        /**/          _______ ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
-        KC_T/*B*/ ,KC_LCTL ,KC_Z/*Z*/ ,KC_X/*X*/ ,KC_C/*C*/ ,KC_B/*V*/ ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-                                                  KC_LALT   ,KC_SPC    ,LT(_GMS_NUMS, KC_ESC) , /**/ _______ ,_______
+        KC_F/*T*/ ,KC_TAB  ,KC_Q/*Q*/ ,KC_W/*W*/ ,KC_K/*E*/ ,KC_S/*R*/ ,              /**/          _______       ,_______   ,_______   ,_______ ,_______ ,_______ ,
+        KC_G/*G*/ ,KC_LSFT ,KC_A/*A*/ ,KC_D/*S*/ ,KC_V/*D*/ ,KC_E/*F*/ ,              /**/          _______       ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
+        KC_T/*B*/ ,KC_LCTL ,KC_Z/*Z*/ ,KC_X/*X*/ ,KC_C/*C*/ ,KC_B/*V*/ ,              /**/          _______       ,_______   ,_______   ,_______ ,_______ ,_______ ,
+                                                  KC_LALT   ,KC_SPC    ,KC_GMS_NUMS , /**/ KC_FS   ,KC_LT_SYS_CSG
     ),
     [_QWERTY_GMS] = LAYOUT(
-        KC_T    ,KC_TAB  ,KC_Q    ,KC_W    ,KC_E     ,KC_R    ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-        KC_G    ,KC_LSFT ,KC_A    ,KC_S    ,KC_D     ,KC_F    ,                        /**/          _______ ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
-        KC_B    ,KC_LCTL ,KC_Z    ,KC_X    ,KC_C     ,KC_V    ,                        /**/          _______ ,_______   ,_______   ,_______ ,_______ ,_______ ,
-                                            KC_LALT  ,KC_SPC  ,LT(_GMS_NUMS, KC_ESC) , /**/ _______ ,_______
+        KC_T    ,KC_TAB  ,KC_Q    ,KC_W    ,KC_E     ,KC_R    ,             /**/          _______       ,_______   ,_______   ,_______ ,_______ ,_______ ,
+        KC_G    ,KC_LSFT ,KC_A    ,KC_S    ,KC_D     ,KC_F    ,             /**/          _______       ,A(KC_TAB) ,G(KC_TAB) ,_______ ,_______ ,_______ ,
+        KC_B    ,KC_LCTL ,KC_Z    ,KC_X    ,KC_C     ,KC_V    ,             /**/          _______       ,_______   ,_______   ,_______ ,_______ ,_______ ,
+                                            KC_LALT  ,KC_SPC  ,KC_GMS_NUMS, /**/ KC_FS   ,KC_LT_SYS_CSG
     ),
     [_GMS_NUMS] = LAYOUT(
         KC_Y    ,HYPR(KC_QUOT) ,KC_1    ,_______ ,KC_2    ,KC_6    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
-        KC_H    ,_______       ,_______ ,_______ ,_______ ,KC_7    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
+        KC_ESC  ,_______       ,_______ ,_______ ,_______ ,KC_7    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
         KC_N    ,_______       ,KC_3    ,KC_4    ,KC_5    ,KC_8    ,          /**/          _______ ,_______ ,_______ ,_______ ,_______ ,_______ ,
                                                   _______ ,_______ ,_______ , /**/ _______ ,_______
     ),
     [_SYS] = LAYOUT(
-        _______    ,G(C(KC_1)) ,G(C(KC_2)) ,G(C(KC_3)) ,G(C(KC_4)) ,G(C(KC_5))    ,          /**/          KC_PGUP ,KC_HOME    ,KC_UP   ,KC_END      ,_______ ,_______   ,
-        C(KC_BSPC) ,KC_BSPC    ,MS_BTN2    ,MS_BTN3    ,MS_BTN1    ,TD(TD_MS_4_5) ,          /**/          KC_PGDN ,KC_LEFT    ,KC_DOWN ,KC_RIGHT    ,KC_DEL  ,C(KC_DEL) ,
-        _______    ,G(KC_1)    ,G(KC_2)    ,G(KC_3)    ,G(KC_4)    ,G(KC_5)       ,          /**/          _______ ,C(KC_LEFT) ,_______ ,C(KC_RIGHT) ,_______ ,_______   ,
-                                                        _______    ,_______       ,_______ , /**/ _______ ,KC_FS
+        _______    ,G(S(KC_F1))  ,G(S(KC_F2))  ,G(S(KC_F3))  ,G(S(KC_F4))  ,G(S(KC_F5))   ,          /**/          KC_PGUP ,KC_HOME    ,KC_UP   ,KC_END      ,_______ ,_______   ,
+        KC_BSPC    ,G(S(KC_F6))  ,G(S(KC_F7))  ,G(S(KC_F8))  ,G(S(KC_F9))  ,G(S(KC_F10))  ,          /**/          KC_PGDN ,KC_LEFT    ,KC_DOWN ,KC_RIGHT    ,_______ ,KC_DEL    ,
+        C(KC_BSPC) ,G(S(KC_F11)) ,G(S(KC_F12)) ,G(S(KC_F13)) ,G(S(KC_F14)) ,G(S(KC_F15))  ,          /**/          _______ ,C(KC_LEFT) ,_______ ,C(KC_RIGHT) ,_______ ,C(KC_DEL) ,
+                                                                _______    ,_______       ,_______ , /**/ _______ ,KC_FS
     ),
     [_MNG] = LAYOUT(
-        _______ ,HYPR(KC_QUOT) ,UG_VALD ,UG_TOGG      ,UG_VALU  ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
+        _______ ,HYPR(KC_QUOT) ,UG_VALD ,UG_TOGG      ,UG_VALU ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
         _______ ,KC_PSCR       ,KC_VOLD ,KC_MPLY      ,KC_VOLU ,_______ ,          /**/          DF(KC_QWERTY_GMS) ,DF(KC_MAP_GMS) ,KC_QWERTY ,DF(KC_DHM) ,_______ ,_______ ,
         _______ ,KC_CAPS       ,KC_MPRV ,HYPR(KC_GRV) ,KC_MNXT ,_______ ,          /**/          _______           ,_______        ,_______   ,_______    ,_______ ,_______ ,
                                                        _______ ,_______ ,_______ , /**/ _______ ,_______
@@ -172,6 +173,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return handle_persist_layer(_QWERTY);
         case KC_FS:
             return handle_layer_on_off(_FS);
+        case KC_GMS_NUMS:
+            return handle_layer_on_off(_GMS_NUMS);
         case KC_LT_SYS_CSG:
             charybdis_set_pointer_dragscroll_enabled(curr_pressed);
             return handle_layer_tap_oneshot(_SYS, MOD_BIT(KC_LCTL) | MOD_BIT(KC_LGUI) | MOD_BIT(KC_LSFT));
